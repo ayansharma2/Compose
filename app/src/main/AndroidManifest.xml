@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ayan.composetest">
-
-    <uses-permission android:name="android.permission.INTERNET" />
+    package="com.ayan.testapp">
 
     <application
         android:allowBackup="true"
@@ -10,12 +8,15 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ComposeTest">
+        android:theme="@style/Theme.TestApp">
         <activity
-            android:name=".Home"
+            android:name=".ChatActivity"
             android:exported="true" />
         <activity
             android:name=".CreateNewAccount"
+            android:exported="true" />
+        <activity
+            android:name=".Home"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

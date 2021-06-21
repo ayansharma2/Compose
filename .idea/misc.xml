@@ -3,9 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/LENOVO/Desktop/ComposeTest/app/src/main/res/layout/activity_create_new_account.xml" value="0.11548913043478261" />
-        <entry key="..\:/Users/LENOVO/Desktop/ComposeTest/app/src/main/res/layout/activity_home.xml" value="0.11548913043478261" />
-        <entry key="..\:/Users/LENOVO/Desktop/ComposeTest/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/LENOVO/Desktop/TestApp/app/src/main/res/layout/activity_chat.xml" value="0.1" />
+        <entry key="..\:/Users/LENOVO/Desktop/TestApp/app/src/main/res/layout/activity_create_new_account.xml" value="0.1" />
+        <entry key="..\:/Users/LENOVO/Desktop/TestApp/app/src/main/res/layout/activity_home.xml" value="0.18568840579710144" />
+        <entry key="..\:/Users/LENOVO/Desktop/TestApp/app/src/main/res/layout/activity_main.xml" value="0.1" />
       </map>
     </option>
   </component>

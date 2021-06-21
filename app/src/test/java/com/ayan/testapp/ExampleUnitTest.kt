@@ -1,4 +1,4 @@
-package com.ayan.composetest
+package com.ayan.testapp
 
 import org.junit.Test
 

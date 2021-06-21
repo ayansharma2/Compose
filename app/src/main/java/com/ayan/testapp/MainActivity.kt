@@ -1,8 +1,9 @@
-package com.ayan.composetest
+package com.ayan.testapp
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -26,6 +27,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(applicationContext)
+        if(FirebaseAuth.getInstance().currentUser!=null){
+            startActivity(Intent(this,Home::class.java))
+        }
         setContent {
             createUi()
         }
@@ -92,8 +96,6 @@ class MainActivity : AppCompatActivity() {
                             })
                 }
             }
-
-
         }
     }
 
@@ -104,8 +106,9 @@ class MainActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         val intent = Intent(this@MainActivity, Home::class.java)
                         startActivity(intent)
-
                     }
+                }.addOnFailureListener {
+                    Log.e("LoginError",it.localizedMessage)
                 }
         } else {
             Toast.makeText(this@MainActivity, "Enter all fields", Toast.LENGTH_LONG).show()

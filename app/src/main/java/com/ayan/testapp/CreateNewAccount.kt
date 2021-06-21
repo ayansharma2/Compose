@@ -1,4 +1,4 @@
-package com.ayan.composetest
+package com.ayan.testapp
 
 import android.content.Intent
 import android.icu.text.CaseMap
@@ -10,10 +10,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -22,13 +19,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.ayan.composetest.Model.User
+import com.ayan.testapp.Model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 class CreateNewAccount : AppCompatActivity() {
@@ -46,14 +43,13 @@ class CreateNewAccount : AppCompatActivity() {
     private lateinit var isProgressBarEnabled:MutableState<Boolean>
 
 
+
     @Composable
     private fun createUi() {
         name = remember { mutableStateOf("") }
         email = remember { mutableStateOf("") }
         password = remember { mutableStateOf("") }
-        isProgressBarEnabled=remember{
-            mutableStateOf(false)
-        }
+        isProgressBarEnabled=remember{ mutableStateOf(false) }
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -78,10 +74,12 @@ class CreateNewAccount : AppCompatActivity() {
                     shape = RoundedCornerShape(12.dp),
                     elevation = 12.dp
                 ) {
-                    if(isProgressBarEnabled.value){
-                        CircularProgressIndicator()
-                    }
+
+//                    if(isProgressBarEnabled.value){
+//                        CircularProgressIndicator()
+//                    }
                     Column(Modifier.background(color = Color.White)) {
+
                         TextField(
                             value = name.value,
                             label = { Text("Name") },
@@ -122,7 +120,11 @@ class CreateNewAccount : AppCompatActivity() {
                                 .padding(top = 25.dp, start = 15.dp, end = 15.dp, bottom = 20.dp)
                         ) {
                             Row {
-                                Text(text = "Log In")
+                                if(isProgressBarEnabled.value){
+                                    CircularProgressIndicator(color=Color.White)
+                                }else{
+                                    Text(text = "Log In")
+                                }
                             }
                         }
 
@@ -133,14 +135,13 @@ class CreateNewAccount : AppCompatActivity() {
     }
 
     private fun createAccount() {
-
+        isProgressBarEnabled.value=true
         if (name.value != "" && email.value != "" && password.value != "") {
-            isProgressBarEnabled.value=true
+
             firebaseAuth.createUserWithEmailAndPassword(
                 email.value, password.value
             ).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    isProgressBarEnabled.value=false
                     insertIntoDatabase()
                 } else {
                     isProgressBarEnabled.value=false
@@ -155,15 +156,14 @@ class CreateNewAccount : AppCompatActivity() {
 
     private fun insertIntoDatabase() {
         Log.i("StartedInsertionProcess","Yes")
-        val id=firebaseAuth.currentUser.uid
-        Log.e("IDIS",id)
-        val user=User(id,name.value,email.value,password.value)
-        Firebase.database.reference.child("Users").child(id).setValue(user)
-            .addOnSuccessListener {
-                val intent=Intent(this@CreateNewAccount,Home::class.java)
-                startActivity(intent)
-            }.addOnFailureListener { task->
-                Log.e("ErrorIs",task.localizedMessage)
-            }
+        val id=firebaseAuth.currentUser?.uid
+        Log.e("IDIS",id!!)
+        val user= User(id,name.value,email.value,password.value)
+        FirebaseDatabase.getInstance().reference.child("Users").child(id).setValue(user).addOnSuccessListener {
+            val intent=Intent(this@CreateNewAccount,Home::class.java)
+            startActivity(intent)
+        }.addOnFailureListener { task->
+            Log.e("ErrorIs",task.localizedMessage)
+        }
     }
 }
